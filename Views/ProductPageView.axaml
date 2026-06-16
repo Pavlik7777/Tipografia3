@@ -1,0 +1,70 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Tipografia3.ViewModels"
+             xmlns:model="using:Tipografia3.Models"
+             xmlns:convert="using:Tipografia3.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Tipografia3.Views.ProductPageView"
+             x:DataType="vm:ProductPageViewModel">
+
+	<Design.DataContext>
+		<vm:ProductPageViewModel/>
+	</Design.DataContext>
+
+	<UserControl.Resources>
+		<DataTemplate x:Key="ProductTemplate" DataType="model:Product">
+			<Border BorderBrush="#DDDDDD" BorderThickness="0,0,0,1" Padding="5">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="80"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="200"/>
+						<!-- ← увеличено для длинных названий -->
+						<ColumnDefinition Width="100"/>
+					</Grid.ColumnDefinitions>
+					<TextBlock Grid.Column="0" Text="{Binding IdProduct}" FontWeight="Bold"/>
+					<TextBlock Grid.Column="1" Text="{Binding NameProduct}"/>
+					<TextBlock Grid.Column="2" Text="{Binding NameCeh}"/>
+					<TextBlock Grid.Column="3" Text="{Binding Price1sh, StringFormat='{}{0:C}'}"/>
+				</Grid>
+			</Border>
+		</DataTemplate>
+	</UserControl.Resources>
+
+<Grid>
+	<Grid.RowDefinitions>
+		<RowDefinition Height="Auto"/>
+		<RowDefinition Height="*"/>
+		<RowDefinition Height="Auto"/>
+	</Grid.RowDefinitions>
+
+	<!-- Заголовок и кнопки импорта/экспорта -->
+	<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+		<TextBlock Text="Продукция типографии"
+				   FontSize="20"
+				   FontWeight="Bold"
+				   VerticalAlignment="Center"
+				   Margin="0,0,20,0"/>
+		<Button Content="📥 Импорт" Command="{Binding ImportCommand}" Margin="5,0"/>
+		<Button Content="📤 Экспорт" Command="{Binding ExportCommand}" Margin="5,0"/>
+	</StackPanel>
+
+	<!-- Список продукции -->
+	<Border Grid.Row="1" BorderBrush="#CCCCCC" BorderThickness="1" Margin="5">
+		<ScrollViewer>
+			<ListBox ItemsSource="{Binding Products}"
+					 ItemTemplate="{StaticResource ProductTemplate}"
+					 SelectedItem="{Binding SelectedProduct}"/>
+		</ScrollViewer>
+	</Border>
+
+	<!-- Кнопки управления -->
+	<StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
+		<Button Content="➕ Добавить" Command="{Binding AddCommand}" Margin="5"/>
+		<Button Content="✏️ Редактировать" Command="{Binding EditCommand}" Margin="5"/>
+		<Button Content="🗑️ Удалить" Command="{Binding DeleteSelectedCommand}" Margin="5"/>
+	</StackPanel>
+</Grid>
+</UserControl>

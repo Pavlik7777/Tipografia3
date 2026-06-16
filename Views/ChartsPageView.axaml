@@ -1,0 +1,68 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Tipografia3.ViewModels"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Tipografia3.Views.ChartsPageView"
+             x:DataType="vm:ChartsPageViewModel">
+
+	<Design.DataContext>
+		<vm:ChartsPageViewModel/>
+	</Design.DataContext>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+			<TextBlock Text="Графики и диаграммы"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"
+                       Margin="0,0,20,0"/>
+			<Button Content="🔄 Обновить"
+                    Command="{Binding LoadChartsCommand}"
+                    Margin="5,0"/>
+		</StackPanel>
+
+		<TabControl Grid.Row="1" Margin="10">
+
+			<!-- 1. Столбчатая диаграмма — Заказы по цехам -->
+			<TabItem Header="Заказы по цехам">
+				<lvc:CartesianChart
+                    Series="{Binding OrdersByCehSeries}"
+                    XAxes="{Binding OrdersByCehXAxes}">
+				</lvc:CartesianChart>
+			</TabItem>
+
+			<!-- 2. Круговая диаграмма — Доля по продукции -->
+			<TabItem Header="Доля по продукции">
+				<lvc:PieChart
+                    Series="{Binding OrdersByProductSeries}"
+                    LegendPosition="Right">
+				</lvc:PieChart>
+			</TabItem>
+
+			<!-- 3. Линейный график — Динамика по месяцам -->
+			<TabItem Header="Динамика по месяцам">
+				<lvc:CartesianChart
+                    Series="{Binding OrdersByMonthSeries}"
+                    XAxes="{Binding OrdersByMonthXAxes}">
+				</lvc:CartesianChart>
+			</TabItem>
+
+			<!-- 4. Гистограмма — Распределение стоимости -->
+			<TabItem Header="Распределение стоимости">
+				<lvc:CartesianChart
+                    Series="{Binding PriceDistributionSeries}"
+                    XAxes="{Binding PriceDistributionXAxes}">
+				</lvc:CartesianChart>
+			</TabItem>
+
+		</TabControl>
+	</Grid>
+</UserControl>

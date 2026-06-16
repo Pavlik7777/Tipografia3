@@ -1,0 +1,79 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="using:Tipografia3.Models"
+        mc:Ignorable="d"
+        d:DesignWidth="400"
+        d:DesignHeight="450"
+        x:Class="Tipografia3.Views.OrderWindow"
+        Title="Заказ"
+        Width="400"
+        Height="450"
+        WindowStartupLocation="CenterOwner"
+        x:DataType="model:Order">
+
+	<Grid Margin="20">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Row="0" Text="Номер заказа:" Margin="0,5"/>
+		<TextBox Grid.Row="1" Text="{Binding IdOrder}" Margin="0,5" IsReadOnly="True"/>
+
+		<TextBlock Grid.Row="2" Text="Договор:" Margin="0,5"/>
+		<ComboBox Grid.Row="3"
+                  x:Name="DogovorComboBox"
+                  PlaceholderText="Выберите договор"
+                  HorizontalAlignment="Stretch"
+                  Margin="0,5">
+			<ComboBox.ItemTemplate>
+				<DataTemplate x:DataType="model:Dogovor">
+					<TextBlock Text="{Binding NumberDogovor}"/>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+
+		<TextBlock Grid.Row="4" Text="Продукция:" Margin="0,5"/>
+		<ComboBox Grid.Row="5"
+                  x:Name="ProductComboBox"
+                  PlaceholderText="Выберите продукт"
+                  HorizontalAlignment="Stretch"
+                  Margin="0,5">
+			<ComboBox.ItemTemplate>
+				<DataTemplate x:DataType="model:Product">
+					<TextBlock Text="{Binding NameProduct}"/>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+
+		<TextBlock Grid.Row="6" Text="Количество:" Margin="0,5"/>
+		<NumericUpDown Grid.Row="7"
+                       x:Name="QuantityNumeric"
+                       Minimum="1"
+                       Value="1"
+                       HorizontalAlignment="Stretch"
+                       Margin="0,5"/>
+
+		<TextBlock Grid.Row="8"
+                   x:Name="SumTextBlock"
+                   Text="Сумма: 0 руб."
+                   FontWeight="Bold"
+                   Foreground="#2E5090"
+                   Margin="0,10"/>
+
+		<StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+			<Button Content="Сохранить" Width="100" Margin="10" Click="Save_Click"/>
+			<Button Content="Отменить" Width="100" Margin="10" Click="Cancel_Click"/>
+		</StackPanel>
+	</Grid>
+</Window>

@@ -1,0 +1,69 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Tipografia3.ViewModels"
+             xmlns:model="using:Tipografia3.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Tipografia3.Views.DogovorPageView"
+             x:DataType="vm:DogovorPageViewModel">
+
+	<Design.DataContext>
+		<vm:DogovorPageViewModel/>
+	</Design.DataContext>
+
+	<UserControl.Resources>
+		<DataTemplate x:Key="DogovorTemplate" DataType="model:Dogovor">
+			<Border BorderBrush="#DDDDDD" BorderThickness="0,0,0,1" Padding="5">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="80"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="120"/>
+						<ColumnDefinition Width="120"/>
+					</Grid.ColumnDefinitions>
+					<TextBlock Grid.Column="0" Text="{Binding NumberDogovor}" FontWeight="Bold"/>
+					<TextBlock Grid.Column="1" Text="{Binding ClientName}"/>
+					<!-- ← было IdClient -->
+					<TextBlock Grid.Column="2" Text="{Binding DateOforml}"/>
+					<TextBlock Grid.Column="3" Text="{Binding DateDue}"/>
+				</Grid>
+			</Border>
+		</DataTemplate>
+	</UserControl.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<!-- Заголовок и кнопки импорта/экспорта -->
+		<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+			<TextBlock Text="Договоры с заказчиками"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"
+                       Margin="0,0,20,0"/>
+			<Button Content="📥 Импорт" Command="{Binding ImportCommand}" Margin="5,0"/>
+			<Button Content="📤 Экспорт" Command="{Binding ExportCommand}" Margin="5,0"/>
+		</StackPanel>
+
+		<!-- Список договоров -->
+		<Border Grid.Row="1" BorderBrush="#CCCCCC" BorderThickness="1" Margin="5">
+			<ScrollViewer>
+				<ListBox ItemsSource="{Binding Dogovors}"
+                         ItemTemplate="{StaticResource DogovorTemplate}"
+                         SelectedItem="{Binding SelectedDogovor}"/>
+			</ScrollViewer>
+		</Border>
+
+		<!-- Кнопки управления -->
+		<StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
+			<Button Content="➕ Добавить" Command="{Binding AddCommand}" Margin="5"/>
+			<Button Content="✏️ Редактировать" Command="{Binding EditCommand}" CommandParameter="{Binding SelectedDogovor}" Margin="5"/>
+			<Button Content="🗑️ Удалить" Command="{Binding DeleteSelectedCommand}" Margin="5"/>
+		</StackPanel>
+	</Grid>
+</UserControl>

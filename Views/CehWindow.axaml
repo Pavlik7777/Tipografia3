@@ -1,0 +1,59 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="using:Tipografia3.Models"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+        x:Class="Tipografia3.Views.CehWindow"
+        Title="Цех"
+        Width="400"
+        Height="400"
+        WindowStartupLocation="CenterOwner"
+        x:DataType="model:TipografCeh">
+
+	<Grid Margin="20">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Row="0" Text="Номер цеха:" Margin="0,5"/>
+		<TextBox Grid.Row="1" Text="{Binding NumberCeh}" Margin="0,5"/>
+
+		<TextBlock Grid.Row="2" Text="Название цеха:" Margin="0,5"/>
+		<TextBox Grid.Row="3" Text="{Binding NameCeh}" Margin="0,5"/>
+
+		<TextBlock Grid.Row="4" Text="Начальник:" Margin="0,5"/>
+		<TextBox Grid.Row="5" Text="{Binding BossCeh}" Margin="0,5"/>
+
+		<TextBlock Grid.Row="6" Text="Телефон:" Margin="0,5"/>
+		<TextBox Grid.Row="7" Text="{Binding PhoneCeh}" Margin="0,5"/>
+
+		<!-- КНОПКИ: Добавить, Сохранить, Отменить -->
+		<StackPanel Grid.Row="8"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Margin="0,20,0,0">
+			<Button Content="Добавить"
+                    Width="100"
+                    Margin="5"
+                    Click="Add_Click"/>
+			<Button Content="Сохранить"
+                    Width="100"
+                    Margin="5"
+                    Click="Save_Click"/>
+			<Button Content="Отменить"
+                    Width="100"
+                    Margin="5"
+                    Click="Cancel_Click"/>
+		</StackPanel>
+	</Grid>
+</Window>

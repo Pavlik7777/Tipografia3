@@ -1,0 +1,269 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Tipografia3.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Tipografia3.Views.ReportsPageView"
+             x:DataType="vm:ReportsPageViewModel">
+
+	<Design.DataContext>
+		<vm:ReportsPageViewModel/>
+	</Design.DataContext>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Row="0"
+                   Text="Аналитические отчёты"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   Margin="10"/>
+
+		<TabControl Grid.Row="1" Margin="10">
+
+			<!-- Отчёт 1: Сводка по цехам -->
+			<TabItem Header="Сводка по цехам">
+				<ScrollViewer>
+					<StackPanel>
+						<!-- Заголовки -->
+						<Grid Background="#E0E0E0" Margin="0,0,0,5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="200"/>
+								<!-- ← Название -->
+								<ColumnDefinition Width="200"/>
+								<!-- ← Начальник -->
+								<ColumnDefinition Width="150"/>
+								<!-- ← Телефон (увеличено) -->
+								<ColumnDefinition Width="80"/>
+								<!-- ← Видов -->
+								<ColumnDefinition Width="120"/>
+								<!-- ← Сумма -->
+							</Grid.ColumnDefinitions>
+							<TextBlock Grid.Column="0" Text="Название" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="1" Text="Начальник" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="2" Text="Телефон" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="3" Text="Видов" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="4" Text="Сумма" FontWeight="Bold" Margin="5"/>
+						</Grid>
+						<!-- Данные -->
+						<ItemsControl ItemsSource="{Binding CehReports}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Border BorderBrush="#DDDDDD" BorderThickness="0,0,0,1">
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="200"/>
+												<ColumnDefinition Width="200"/>
+												<ColumnDefinition Width="150"/>
+												<ColumnDefinition Width="80"/>
+												<ColumnDefinition Width="120"/>
+											</Grid.ColumnDefinitions>
+											<TextBlock Grid.Column="0" Text="{Binding NameCeh}" Margin="5"/>
+											<TextBlock Grid.Column="1" Text="{Binding BossCeh}" Margin="5"/>
+											<TextBlock Grid.Column="2" Text="{Binding PhoneCeh}" Margin="5"/>
+											<TextBlock Grid.Column="3" Text="{Binding ProductCount}" Margin="5"/>
+											<TextBlock Grid.Column="4" Text="{Binding TotalSum, StringFormat='{}{0:C}'}" Margin="5"/>
+										</Grid>
+									</Border>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+
+			<!-- Отчёт 2: Сводка по продукции -->
+			<TabItem Header="Сводка по продукции">
+				<ScrollViewer>
+					<StackPanel>
+						<Grid Background="#E0E0E0" Margin="0,0,0,5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<TextBlock Grid.Column="0" Text="Название" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="1" Text="Цех" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="2" Text="Стоимость" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="3" Text="Заказов" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="4" Text="Выручка" FontWeight="Bold" Margin="5"/>
+						</Grid>
+						<ItemsControl ItemsSource="{Binding ProductReports}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Border BorderBrush="#DDDDDD" BorderThickness="0,0,0,1">
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="Auto"/>
+												<ColumnDefinition Width="Auto"/>
+												<ColumnDefinition Width="Auto"/>
+											</Grid.ColumnDefinitions>
+											<TextBlock Grid.Column="0" Text="{Binding NameProduct}" Margin="5"/>
+											<TextBlock Grid.Column="1" Text="{Binding CehName}" Margin="5"/>
+											<TextBlock Grid.Column="2" Text="{Binding Price, StringFormat='{}{0:C}'}" Margin="5"/>
+											<TextBlock Grid.Column="3" Text="{Binding OrderCount}" Margin="5"/>
+											<TextBlock Grid.Column="4" Text="{Binding Revenue, StringFormat='{}{0:C}'}" Margin="5"/>
+										</Grid>
+									</Border>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+
+			<!-- Отчёт 3: Невостребованная продукция -->
+			<TabItem Header="Невостребованная продукция">
+				<ScrollViewer>
+					<StackPanel>
+						<Grid Background="#E0E0E0" Margin="0,0,0,5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<TextBlock Grid.Column="0" Text="Код" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="1" Text="Название" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="2" Text="Номер цеха" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="3" Text="Стоимость" FontWeight="Bold" Margin="5"/>
+						</Grid>
+
+						<!-- Сообщение если пусто -->
+						<TextBlock Text="Такой продукции нет"
+								   FontSize="16"
+								   Foreground="#666"
+								   HorizontalAlignment="Center"
+								   Margin="20"
+								   IsVisible="{Binding !HasUnsoldProducts}"/>
+
+						<ItemsControl ItemsSource="{Binding UnsoldProducts}"
+									  IsVisible="{Binding HasUnsoldProducts}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Border BorderBrush="#DDDDDD" BorderThickness="0,0,0,1">
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="Auto"/>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="Auto"/>
+												<ColumnDefinition Width="Auto"/>
+											</Grid.ColumnDefinitions>
+											<TextBlock Grid.Column="0" Text="{Binding IdProduct}" Margin="5"/>
+											<TextBlock Grid.Column="1" Text="{Binding NameProduct}" Margin="5"/>
+											<TextBlock Grid.Column="2" Text="{Binding NumberCeh}" Margin="5"/>
+											<TextBlock Grid.Column="3" Text="{Binding Price1sh, StringFormat='{}{0:C}'}" Margin="5"/>
+										</Grid>
+									</Border>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+
+			<!-- Отчёт 4: Сводка по договорам -->
+			<TabItem Header="Сводка по договорам">
+				<ScrollViewer>
+					<StackPanel>
+						<Grid Background="#E0E0E0" Margin="0,0,0,5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<TextBlock Grid.Column="0" Text="№ договора" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="1" Text="Заказчик" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="2" Text="Дата оформления" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="3" Text="Дата выполнения" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="4" Text="Сумма" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="5" Text="Статус" FontWeight="Bold" Margin="5"/>
+						</Grid>
+						<ItemsControl ItemsSource="{Binding DogovorReports}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Border BorderBrush="#DDDDDD" BorderThickness="0,0,0,1">
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="Auto"/>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="Auto"/>
+												<ColumnDefinition Width="Auto"/>
+												<ColumnDefinition Width="Auto"/>
+												<ColumnDefinition Width="Auto"/>
+											</Grid.ColumnDefinitions>
+											<TextBlock Grid.Column="0" Text="{Binding NumberDogovor}" Margin="5"/>
+											<TextBlock Grid.Column="1" Text="{Binding ClientName}" Margin="5"/>
+											<TextBlock Grid.Column="2" Text="{Binding DateOforml}" Margin="5"/>
+											<TextBlock Grid.Column="3" Text="{Binding DateDue}" Margin="5"/>
+											<TextBlock Grid.Column="4" Text="{Binding TotalSum, StringFormat='{}{0:C}'}" Margin="5"/>
+											<TextBlock Grid.Column="5" Text="{Binding Status}" Margin="5"/>
+										</Grid>
+									</Border>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+
+			<!-- Отчёт 5: Топ-5 продукции -->
+			<TabItem Header="Топ-5 продукции">
+				<ScrollViewer>
+					<StackPanel>
+						<Grid Background="#E0E0E0" Margin="0,0,0,5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<TextBlock Grid.Column="0" Text="Название" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="1" Text="Выручка" FontWeight="Bold" Margin="5"/>
+							<TextBlock Grid.Column="2" Text="Доля (%)" FontWeight="Bold" Margin="5"/>
+						</Grid>
+						<ItemsControl ItemsSource="{Binding TopProducts}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Border BorderBrush="#DDDDDD" BorderThickness="0,0,0,1">
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="Auto"/>
+												<ColumnDefinition Width="Auto"/>
+											</Grid.ColumnDefinitions>
+											<TextBlock Grid.Column="0" Text="{Binding NameProduct}" Margin="5"/>
+											<TextBlock Grid.Column="1" Text="{Binding Revenue, StringFormat='{}{0:C}'}" Margin="5"/>
+											<TextBlock Grid.Column="2" Text="{Binding Share, StringFormat='{}{0:F2}%'}" Margin="5"/>
+										</Grid>
+									</Border>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+
+		</TabControl>
+		<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+			<TextBlock Text="Аналитические отчёты"
+					   FontSize="20"
+					   FontWeight="Bold"
+					   VerticalAlignment="Center"
+					   Margin="0,0,20,0"/>
+			<Button Content="🔄 Обновить"
+					Command="{Binding LoadAllReportsCommand}"
+					Margin="5,0"/>
+		</StackPanel>
+	</Grid>
+</UserControl>

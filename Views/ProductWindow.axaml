@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+        x:Class="Tipografia3.Views.ProductWindow"
+        Title="Продукция"
+        Width="400" Height="400"
+        WindowStartupLocation="CenterOwner">
+
+	<Grid Margin="20">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<TextBlock Grid.Row="0" Text="Код продукции:" Margin="0,5"/>
+		<TextBox Grid.Row="1" Text="{Binding IdProduct}" Margin="0,5"/>
+		<TextBlock Grid.Row="2" Text="Название продукции:" Margin="0,5"/>
+		<TextBox Grid.Row="3" Text="{Binding NameProduct}" Margin="0,5"/>
+
+		<TextBlock Grid.Row="4" Text="Номер цеха:" Margin="0,5"/>
+		<NumericUpDown Grid.Row="5" Value="{Binding NumberCeh}" Margin="0,5" Minimum="1"/>
+
+		<TextBlock Grid.Row="6" Text="Стоимость единицы (руб.):" Margin="0,5"/>
+		<NumericUpDown Grid.Row="7" Value="{Binding Price1sh}" Margin="0,5" Minimum="0.01" FormatString="F2"/>
+
+		<StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+			<Button Content="Сохранить" Width="100" Margin="10" Click="Save_Click"/>
+			<Button Content="Отменить" Width="100" Margin="10" Click="Cancel_Click"/>
+		</StackPanel>
+	</Grid>
+</Window>

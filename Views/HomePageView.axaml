@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Tipografia3.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Tipografia3.Views.HomePageView"
+             x:DataType="vm:HomePageViewModel">
+
+	<Design.DataContext>
+		<vm:HomePageViewModel/>
+	</Design.DataContext>
+
+	<StackPanel Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+		<TextBlock Text="Типография"
+				   FontSize="30"
+				   FontWeight="Bold"
+				   HorizontalAlignment="Center"
+				   Margin="0,0,0,20"
+				   Foreground="#2E5090"/>
+
+		<TextBlock Text="Выполнил Поляков Павел"
+				   FontSize="18"
+				   HorizontalAlignment="Center"
+				   Foreground="Black"
+				   Margin="0,0,0,10"/>
+
+		<TextBlock Text="Группа 24-ИСП-2/1"
+				   FontSize="18"
+				   HorizontalAlignment="Center"
+				   Foreground="Black"/>
+	</StackPanel>
+</UserControl>

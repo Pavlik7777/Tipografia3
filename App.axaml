@@ -1,0 +1,17 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Tipografia3.App"
+             xmlns:local="using:Tipografia3"
+             RequestedThemeVariant="Default">
+
+	<Application.DataTemplates>
+		<local:ViewLocator/>
+	</Application.DataTemplates>
+
+	<Application.Styles>
+		<FluentTheme />
+		<Style Selector="TextBlock">
+			<Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+		</Style>
+	</Application.Styles>
+</Application>
