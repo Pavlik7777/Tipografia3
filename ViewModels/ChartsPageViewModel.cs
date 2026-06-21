@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
@@ -90,7 +90,8 @@ public partial class ChartsPageViewModel : ViewModelBase
             new Axis
             {
                 Labels = labels,
-                TextSize = 12
+                TextSize = 12,
+                LabelsRotation = 10
             }
         };
     }
