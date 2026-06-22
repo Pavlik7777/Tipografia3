@@ -1,15 +1,11 @@
-﻿using Avalonia.Animation.Easings;
 using CsvHelper;
-using CsvHelper.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Tipografia3.Models;
-using Tmds.DBus.Protocol;
 
 namespace Tipografia3.Services;
 
@@ -46,7 +42,6 @@ public class LoadCSVService<T> : ILoadInterface<T> where T : class
     {
         csv.Read();
         csv.ReadHeader();
-
         while (csv.Read())
         {
             try
@@ -67,11 +62,11 @@ public class LoadCSVService<T> : ILoadInterface<T> where T : class
             }
         }
     }
+
     private async Task LoadProductCSV(CsvReader csv)
     {
         csv.Read();
         csv.ReadHeader();
-
         while (csv.Read())
         {
             try
@@ -96,7 +91,6 @@ public class LoadCSVService<T> : ILoadInterface<T> where T : class
     {
         csv.Read();
         csv.ReadHeader();
-
         while (csv.Read())
         {
             try
@@ -121,19 +115,40 @@ public class LoadCSVService<T> : ILoadInterface<T> where T : class
         csv.Read();
         csv.ReadHeader();
 
+        // Автоматически определяем следующий Id
+        var clientService = new ClientsPageService();
+        var dogovorService = new DogovorPageService();
+        var existingClients = await clientService.GetAsync();
+        var existingDogovors = await dogovorService.GetAsync();
+        int clientId = existingClients.Count > 0 ? existingClients.Max(c => c.IdClient) + 1 : 1;
+        int dogovorId = existingDogovors.Count > 0 ? existingDogovors.Max(d => d.IdDogovor) + 1 : 1;
+
         while (csv.Read())
         {
             try
             {
+                // Создаём клиента из полей договора автоматически
+                var client = new Client
+                {
+                    IdClient = clientId,
+                    NameClient = csv.GetField("NameClient") ?? "Неизвестно",
+                    Address = csv.GetField("Address") ?? ""
+                };
+                await clientService.AddAsync(client);
+
+                // Создаём договор
                 var dogovor = new Dogovor
                 {
-                    IdDogovor = csv.GetField<int>("Id_Dogovor"),
-                    IdClient = csv.GetField<int>("Id_Client"),
+                    IdDogovor = dogovorId,
+                    IdClient = clientId,
                     NumberDogovor = csv.GetField<int>("NumberDogovor"),
-                    DateOforml = csv.GetField("Date_Oforml"),
-                    DateDue = csv.GetField("Date_Due")
+                    DateOforml = csv.GetField("Date_Oforml") ?? "",
+                    DateDue = csv.GetField("Date_Due") ?? ""
                 };
                 await _service.AddAsync((T)(object)dogovor);
+
+                clientId++;
+                dogovorId++;
             }
             catch (Exception ex)
             {
@@ -146,7 +161,6 @@ public class LoadCSVService<T> : ILoadInterface<T> where T : class
     {
         csv.Read();
         csv.ReadHeader();
-
         while (csv.Read())
         {
             try
@@ -171,9 +185,7 @@ public class LoadCSVService<T> : ILoadInterface<T> where T : class
     {
         var records = csv.GetRecords<T>();
         foreach (var record in records)
-        {
             await _service.AddAsync(record);
-        }
     }
 
     public async Task UploadAsync(string path, List<T> list)
