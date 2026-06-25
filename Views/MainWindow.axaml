@@ -22,7 +22,7 @@
 		</Grid.ColumnDefinitions>
 
 		<!-- Левая панель навигации -->
-		<Border Grid.Column="0" Background="#E0E0E0" Padding="5">
+		<Border Grid.Column="0" Background="Pink" Padding="5" >
 			<StackPanel Spacing="5">
 				<TextBlock Text="ТИПОГРАФИЯ"
                            FontSize="18"
@@ -35,43 +35,50 @@
                         Width="180"
                         Height="40"
                         Command="{Binding NavigateCommand}"
-                        CommandParameter="Home"/>
+                        CommandParameter="Home"
+                        Background="white"/>
 
 				<Button Content="Цеха"
                         Width="180"
                         Height="40"
                         Command="{Binding NavigateCommand}"
-                        CommandParameter="Ceh"/>
+                        CommandParameter="Ceh"
+                        Background="white"/>
 
 				<Button Content="Продукция"
                         Width="180"
                         Height="40"
                         Command="{Binding NavigateCommand}"
-                        CommandParameter="Product"/>
+                        CommandParameter="Product"
+                        Background="white"/>
 
 				<Button Content="Договоры"
                         Width="180"
                         Height="40"
                         Command="{Binding NavigateCommand}"
-                        CommandParameter="Dogovor"/>
+                        CommandParameter="Dogovor"
+                        Background="white"/>
 
 				<Button Content="Заказы"
                         Width="180"
                         Height="40"
                         Command="{Binding NavigateCommand}"
-                        CommandParameter="Order"/>
+                        CommandParameter="Order"
+                        Background="white"/>
 
 				<Button Content="Отчёты"
                         Width="180"
                         Height="40"
                         Command="{Binding NavigateCommand}"
-                        CommandParameter="Reports"/>
+                        CommandParameter="Reports"
+                        Background="white"/>
 
 				<Button Content="Графики"
                         Width="180"
                         Height="40"
                         Command="{Binding NavigateCommand}"
-                        CommandParameter="Charts"/>
+                        CommandParameter="Charts"
+                        Background="white"/>
 			</StackPanel>
 		</Border>
 
